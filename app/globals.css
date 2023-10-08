@@ -21,3 +21,9 @@ body {
 .text-custom-large {
   font-size: 4.5rem; /* Adjust the size as needed */
 }
+[id]::before {
+  content: '';
+  display: block;
+  height: 80px; /* Adjust this value as needed to account for your fixed header's height */
+  margin: -80px 0 0; /* Negative margin to counteract the header's height */
+}

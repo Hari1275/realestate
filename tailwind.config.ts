@@ -15,6 +15,7 @@ const config: Config = {
       },
       fontSize: {
         '8xl': '7.5rem',
+        '7xl': '2.5rem',
       },
     },
   },
