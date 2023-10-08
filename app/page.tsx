@@ -106,7 +106,7 @@ export default function Home() {
           </div>
           <Link href='#' className='btn btn-ghost normal-case text-xl'>
             <Image
-              src={'/logo.png'}
+              src='/logo.png'
               alt='logo'
               width={100}
               height={100}
@@ -207,7 +207,13 @@ export default function Home() {
           animate={{ opacity: 1, x: 0 }} // Animation properties when component appears
           transition={{ duration: 1 }}
         >
-          <img src='section.png' alt='Image' className='w-full h-auto' />
+          <Image
+            src='/section.png'
+            alt='Image'
+            className='w-full h-auto'
+            width={350}
+            height={350}
+          />
         </motion.div>
         {/* Right Column (Text) */}
         {/* <div className='md:w-1/2 mt-4 md:mt-0'>
@@ -277,10 +283,16 @@ export default function Home() {
           }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
-          <img src='second-section.png' alt='Image' className='w-full h-auto' />
+          <Image
+            src='/second-section.png'
+            alt='Image'
+            className='w-full h-auto'
+            width={350}
+            height={350}
+          />
         </motion.div>
       </div>
-      ;{/* Gallery section */}
+      {/* Gallery section */}
       <div id='gallery'>
         <p className='md:text-7xl text-3xl text-[#DA9100] font-700 text-center  bg-[#111] py-6'>
           GALLERY
@@ -295,7 +307,7 @@ export default function Home() {
         >
           {imageUrls.map((imageUrl, index) => (
             <div key={index}>
-              <img
+              <Image
                 className='h-auto max-w-full rounded-lg'
                 src={imageUrl}
                 alt={`Image ${index + 1}`}
@@ -344,7 +356,13 @@ export default function Home() {
       <div className='mx-auto py-10 px-10 mt-0 bg-[#111] gap-10 flex flex-col md:flex-row items-center'>
         {/* Left Column (Image) */}
         <div className='md:w-1/2 md:pr-4'>
-          <img src='plan.png' alt='Image' className='w-full h-auto' />
+          <Image
+            src='/plan.png'
+            alt='Image'
+            className='w-full h-auto'
+            width={350}
+            height={350}
+          />
         </div>
 
         {/* Right Column (Text) */}
@@ -376,7 +394,13 @@ export default function Home() {
 
         {/* Right Column (Text) */}
         <div className='md:w-1/2 md:pr-4'>
-          <img src='location.png' alt='Image' className='w-full h-auto' />
+          <Image
+            src='/location.png'
+            alt='Image'
+            className='w-full h-auto'
+            width={350}
+            height={350}
+          />
         </div>
       </div>
       <div className='mx-auto py-10 px-10 mt-0  gap-10 flex flex-col md:flex-row items-center  bg-[#1E1E1E]'>
@@ -407,7 +431,12 @@ export default function Home() {
         <div className='mx-auto w-full '>
           <div className='grid grid-cols-1 gap-8 py-10 px-10 lg:py-8 md:grid-cols-3'>
             <div>
-              <img src='logo.png' alt='Company Logo' width={125} height={125} />
+              <Image
+                src='/logo.png'
+                alt='Company Logo'
+                width={125}
+                height={125}
+              />
               <p className='text-white  font-normal font-[400] py-8'>
                 Every Subha Builders & Developers project is well designed and
                 developed with the highest standards of quality. From spacious
@@ -421,7 +450,13 @@ export default function Home() {
                 Contact Us.
               </h2>
               <div className='flex items-center space-x-4 border-b border-gray-300 dark:border-gray-700 pb-4'>
-                <img src='Vector.svg' alt='Phone' className='w-6 h-6' />
+                <Image
+                  src='/Vector.svg'
+                  alt='Phone'
+                  className='w-6 h-6'
+                  width={4}
+                  height={4}
+                />
                 <div className='flex flex-col'>
                   <p className='text-white font-normal font-[400]'>
                     Phone Number
@@ -432,7 +467,13 @@ export default function Home() {
                 </div>
               </div>
               <div className='flex items-center space-x-4 py-4 border-b border-gray-300 dark:border-gray-700 pb-4'>
-                <img src='message.svg' alt='Phone' className='w-6 h-6' />
+                <Image
+                  src='/message.svg'
+                  alt='Phone'
+                  className='w-6 h-6'
+                  width={4}
+                  height={4}
+                />
                 <div className='flex flex-col'>
                   <p className='text-white font-normal font-[400]'>
                     Email Address
@@ -443,7 +484,13 @@ export default function Home() {
                 </div>
               </div>
               <div className='flex items-center space-x-4 py-4'>
-                <img src='loc.svg' alt='Phone' className='w-6 h-6' />
+                <Image
+                  src='/loc.svg'
+                  alt='Phone'
+                  className='w-6 h-6'
+                  width={4}
+                  height={4}
+                />
                 <div className='flex flex-col'>
                   <p className='text-white font-normal font-[400]'>
                     Office Address
