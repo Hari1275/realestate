@@ -403,18 +403,18 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className='mx-auto py-10 px-10 mt-0  gap-10 flex flex-col md:flex-row items-center  bg-[#1E1E1E]'>
+      <div className='mx-auto py-10 px-10 mt-0 gap-10 flex flex-col  md:flex-row items-center bg-[#1E1E1E]'>
         {/* Left Column (Google Map iframe) */}
-        {/* <div className='md:w-1/2 md:pr-4'>
+        <div className='md:w-1/2 md:pr-4'>
           <iframe
-            src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.67890!2dLongitude!3dLatitude!4m15!1m6!1m2!1sAddress!2sCity!3sState!2m4!1i20!2i30!3i200!4i100!5i5!6i1!7i4!8i100!9i2!10i3!12i1!13i10!14i1!15i3!16i4!18i9'
-            width='600'
-            height='450'
-            style={{ border: '0' }}
+            src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d124425.33634737677!2d77.48873064320871!3d12.953173055800995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae149aa0dcfcf9%3A0xa83f0d28751ff1a!2sSubha%20Builders%20and%20Developers!5e0!3m2!1sen!2sin!4v1696786208507!5m2!1sen!2sin'
+            style={{ border: '0', borderRadius: '25px' }}
             allowFullScreen={false}
             loading='lazy'
+            referrerPolicy='no-referrer-when-downgrade'
+            className='w-full h-[450px]'
           ></iframe>
-        </div> */}
+        </div>
 
         {/* Right Column (Text Content) */}
         <div className='md:w-1/2 mt-4 md:mt-0'>
@@ -426,13 +426,14 @@ export default function Home() {
           </p>
         </div>
       </div>
+
       {/* Footer */}
-      <footer className='bg-white dark:bg-[#1E1E1E]' id='footer'>
+      <footer className='bg-white dark:bg-[#1E1E1E] md:my-4 my-0' id='footer'>
         <div className='mx-auto w-full '>
-          <div className='grid grid-cols-1 gap-8 py-10 px-10 lg:py-8 md:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-8 py-10 px-10 lg:py-8 md:grid-cols-3 '>
             <div>
               <Image
-                src='/logo.png'
+                src='/logo-old.png'
                 alt='Company Logo'
                 width={125}
                 height={125}
@@ -503,9 +504,9 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <div className='bg-yellow-600  rounded-lg'>
-                <div className='bg-yellow-400 rounded-lg p-4 flex flex-col items-center text-center'>
-                  <h1 className='text-xl font-bold mb-4 text-[#111]'>
+              <div className='bg-[#A08131] rounded-lg'>
+                <div className='bg-[#A08131] rounded-lg p-4 flex flex-col items-center text-center'>
+                  <h1 className='text-xl font-bold mb-4 text-[#fff]'>
                     Feel free to contact us if you need any assistance, any
                     help, or another question.
                   </h1>
