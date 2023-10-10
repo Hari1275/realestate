@@ -1,19 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css?family=Antonio&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Acumin+Variable+Concept&display=swap');
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Antonio', sans-serif;
 }
 
-body {
+p {
+  font-family: 'Acumin Variable Concept', sans-serif;
+}
+
+/* body {
   color: rgb(var(--foreground-rgb));
   background: '#1E1E1E';
-}
+} */
 .text-custom {
   font-size: 1rem; /* Adjust the size as needed */
 }
@@ -26,4 +33,28 @@ body {
   display: block;
   height: 80px; /* Adjust this value as needed to account for your fixed header's height */
   margin: -80px 0 0; /* Negative margin to counteract the header's height */
+}
+.swiper {
+  width: 100%;
+  height: 500px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  background-color: #1e1e1e;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .swiper-slide img {
+    display: block;
+    width: 500px;
+    height: 450px;
+    object-fit: cover;
+  }
 }

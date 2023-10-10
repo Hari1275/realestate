@@ -14,6 +14,17 @@ import {
 import ListItems from './components/ListItems';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
+
+// import './styles.css';
 export default function Home() {
   const [ref, inView] = useInView({
     triggerOnce: true, // Trigger the animation only once when it comes into view
@@ -29,7 +40,7 @@ export default function Home() {
   }, [controls, inView]);
   return (
     <>
-      <div className='navbar bg-[#DDCF8D] sticky top-0'>
+      <div className='navbar bg-[#DDCF8D] sticky top-0 z-10'>
         <div className='navbar-start'>
           <div className='dropdown'>
             <label tabIndex={0} className='btn btn-ghost lg:hidden'>
@@ -171,30 +182,104 @@ export default function Home() {
     </div> */}
       </div>
       {/* hero */}
-      <div
-        className='hero min-h-[500px] md:min-h-[500px] lg:min-h-[600px]'
-        style={{
-          backgroundImage: 'url(hero.png)',
-          display: 'flex',
-          alignItems: 'center', // Vertically center the content
-          paddingLeft: '40px', // Add 10px padding to the left
-        }}
-      >
-        {/* <div className='hero-overlay bg-opacity-60'></div> */}
-        <div className='flex flex-col text-start'>
-          <h4 className='mb-5 font-bold text-sm'>WELCOME TO YOUR WORLD OF</h4>
 
-          <p className='mb-2 text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-medium'>
-            Comfort &amp;
-          </p>
-          <p className='mb-5 text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium'>
-            Convenience!
-          </p>
-          <p className='mb-5 my-2 text-base md:text-lg lg:text-xl xl:text-2xl'>
-            101 ADORABLE APARTMENTS @ YEMALUR, BENGALURU
-          </p>
-        </div>
-      </div>
+      <Swiper
+        spaceBetween={30}
+        slidesPerView={1}
+        effect={'fade'}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        modules={[EffectFade, Navigation, Pagination, Autoplay]}
+        className='mySwiper'
+      >
+        <SwiperSlide>
+          <div
+            className='swiper-image hero min-h-[500px] md:min-h-[500px] lg:min-h-[650px]'
+            style={{
+              backgroundImage: 'url("/hero.png")',
+
+              display: 'flex',
+              alignItems: 'center', // Vertically center the content
+              paddingLeft: '40px',
+            }}
+          >
+            <div className='content text-white'>
+              <h4 className='mb-5 font-bold text-sm'>
+                WELCOME TO YOUR WORLD OF
+              </h4>
+              <p className='mb-2 text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-medium'>
+                Comfort &amp;
+              </p>
+              <p className='mb-5 text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium'>
+                Convenience!
+              </p>
+              <p className='mb-5 my-2  lg:pb-20  md:text-lg lg:text-xl xl:text-2xl'>
+                101 ADORABLE APARTMENTS @ YEMALUR, BENGALURU
+              </p>
+            </div>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          {/* <img src='/hero-1.png' /> */}
+          <div
+            className='swiper-image hero min-h-[500px] md:min-h-[500px] lg:min-h-[650px]'
+            style={{
+              backgroundImage: 'url("/hero-1.png")',
+
+              display: 'flex',
+              alignItems: 'center', // Vertically center the content
+              paddingLeft: '40px',
+            }}
+          >
+            <div className='content text-white'>
+              <h4 className='mb-5 font-bold text-sm'>
+                WELCOME TO YOUR WORLD OF
+              </h4>
+              <p className='mb-2 text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-medium'>
+                Comfort &amp;
+              </p>
+              <p className='mb-5 text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium'>
+                Convenience!
+              </p>
+              <p className='mb-5 my-2 lg:pb-20 text-base md:text-lg lg:text-xl xl:text-2xl'>
+                101 ADORABLE APARTMENTS @ YEMALUR, BENGALURU
+              </p>
+            </div>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          {/* <img src='/hero-2.png' /> */}
+          <div
+            className='swiper-image hero min-h-[500px] md:min-h-[500px] lg:min-h-[650px]'
+            style={{
+              backgroundImage: 'url("/hero-2.png")',
+
+              display: 'flex',
+              alignItems: 'center', // Vertically center the content
+              paddingLeft: '40px',
+            }}
+          >
+            <div className='content text-white'>
+              <h4 className='mb-5 font-bold text-sm'>
+                WELCOME TO YOUR WORLD OF
+              </h4>
+              <p className='mb-2 text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-medium'>
+                Comfort &amp;
+              </p>
+              <p className='mb-5 text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium'>
+                Convenience!
+              </p>
+              <p className='mb-5 my-2 lg:pb-20 text-base md:text-lg lg:text-xl xl:text-2xl'>
+                101 ADORABLE APARTMENTS @ YEMALUR, BENGALURU
+              </p>
+            </div>
+          </div>
+        </SwiperSlide>
+      </Swiper>
+
       {/* content */}
       <div className='mx-auto py-10 px-10 mt-0 gap-10 flex flex-col md:flex-row items-center bg-[#1E1E1E]'>
         {/* Left Column (Image) */}
@@ -236,7 +321,7 @@ export default function Home() {
           <h2 className='text-3xl font-700 text-[#DA9100]'>
             LIFE AT ESPERANZA
           </h2>
-          <p className='mt-4'>
+          <p className='mt-4 text-[#fff]'>
             Relationships mean the world to us; we connect people to their homes
             and to their communities. All locations are hand-picked considering
             future appreciation, proximity, and convenience of essentials in and
@@ -245,7 +330,7 @@ export default function Home() {
         </motion.div>
       </div>
       {/* second content */}
-      <div className='mx-auto py-10 px-10 mt-0 gap-10 flex flex-col md:flex-row items-center bg-[#1E1E1E]'>
+      <div className='mx-auto py-10 px-10 mt-0 gap-10 flex flex-col md:flex-row items-center bg-[#1E1E1E] text-[#fff]'>
         {/* Left Column (Image) */}
         <motion.div
           ref={ref}
@@ -325,7 +410,7 @@ export default function Home() {
         </p>
       </div>
       <div>
-        <div className='mx-auto md:py-10 px-10 mt-0 bg-[#1E1E1E]'>
+        <div className='mx-auto md:py-10 px-10 mt-0 bg-[#1E1E1E] text-[#fff]'>
           <div className='lg:flex lg:flex-row lg:space-x-8'>
             <ListItems title='Key Locations' items={keyLocations} />
             <ListItems title='IT Parks & Companies' items={itCompanies} />
@@ -336,7 +421,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className='mx-auto md:py-10 px-10 py-0 mt-0 bg-[#1E1E1E]'>
+        <div className='mx-auto md:py-10 px-10 py-0 mt-0 bg-[#1E1E1E] text-[#fff]'>
           <div className='lg:flex lg:flex-row lg:space-x-8'>
             <ListItems title='Hospitals' items={hospitals} />
             <ListItems
@@ -366,7 +451,7 @@ export default function Home() {
         </div>
 
         {/* Right Column (Text) */}
-        <div className='md:w-1/2 mt-4 md:mt-0'>
+        <div className='md:w-1/2 mt-4 md:mt-0 text-[#fff]'>
           <p className='mt-4 text-2xl font-[700]'>
             1.75 ACRES OF GREEN OPEN SPACES, LANDSCAPING AND NATURALLY CONNECTED
             LIFESTYLE
@@ -382,7 +467,7 @@ export default function Home() {
       <div className='mx-auto py-10 px-10 mt-0 bg-[#1E1E1E] gap-10 flex flex-col md:flex-row items-center'>
         {/* Left Column (Image) */}
 
-        <div className='md:w-1/2 mt-4 md:mt-0'>
+        <div className='md:w-1/2 mt-4 md:mt-0 text-[#fff]'>
           <p className='mt-4 '>
             Experience modern living at Subha Esperanza with impeccable design,
             spacious 2 and 3 BHK apartments, luxurious amenities, and serene
@@ -417,7 +502,7 @@ export default function Home() {
         </div>
 
         {/* Right Column (Text Content) */}
-        <div className='md:w-1/2 mt-4 md:mt-0'>
+        <div className='md:w-1/2 mt-4 md:mt-0 text-[#fff]'>
           <p className='mt-4 '>
             With close proximity to major IT parks, commercial spaces, and
             workplaces in and around the ORR IT corridor, the strategic location
@@ -428,7 +513,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className='bg-white dark:bg-[#1E1E1E] md:my-4 my-0' id='footer'>
+      <footer className='bg-[#1E1E1E] md:py-10 my-0' id='footer'>
         <div className='mx-auto w-full '>
           <div className='grid grid-cols-1 gap-8 py-10 px-10 lg:py-8 md:grid-cols-3 '>
             <div>
@@ -570,7 +655,7 @@ export default function Home() {
           <br />
         </p>
       </section>
-      <div className='p-2 text-center'>
+      <div className='p-2 text-center bg-[#1E1E1E] text-white'>
         <p>
           <br />© 2023 All Rights Reserved | Powered by wipeoutQ|{' '}
           <a href='https://www.wipeoutq.com' className='text-white'>
