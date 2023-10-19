@@ -344,7 +344,7 @@ export default function Home() {
           <div
             className='swiper-image hero min-h-screen md:min-h-screen lg:min-h-screen bg-cover bg-no-repeat absolute top-0 w-full h-full'
             style={{
-              backgroundImage: 'url("/hero.png")',
+              backgroundImage: 'url("/hero.webp")',
 
               display: 'flex',
               alignItems: 'center', // Vertically center the content
@@ -372,7 +372,7 @@ export default function Home() {
           <div
             className='swiper-image hero min-h-screen md:min-h-screen lg:min-h-screen bg-cover bg-no-repeat'
             style={{
-              backgroundImage: 'url("/hero-1.png")',
+              backgroundImage: 'url("/hero-1.webp")',
 
               display: 'flex',
               alignItems: 'center', // Vertically center the content
@@ -400,7 +400,7 @@ export default function Home() {
           <div
             className='swiper-image hero min-h-screen md:min-h-screen lg:min-h-screen bg-cover bg-no-repeat'
             style={{
-              backgroundImage: 'url("/hero-2.png")',
+              backgroundImage: 'url("/hero-2.webp")',
 
               display: 'flex',
               alignItems: 'center', // Vertically center the content
