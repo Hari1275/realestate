@@ -132,11 +132,14 @@ export default function Home() {
     // console.log(formData);
   };
   function handleDownload() {
-    // const pdfUrl = '/path-to-your-pdf.pdf';
-    // const a = document.createElement('a');
-    // a.href = pdfUrl;
-    // a.download = 'ESPERANZA.pdf';
-    // a.click();
+    const pdfUrl =
+      'https://d3svv1ub18oysf.cloudfront.net/Subha%20Esperanza_Brochure.pdf';
+    const a = document.createElement('a');
+    a.href = pdfUrl;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.download = 'ESPERANZA_BROCHURE.pdf';
+    a.click();
   }
   return (
     <>
@@ -425,12 +428,14 @@ export default function Home() {
         </SwiperSlide>
       </Swiper>
       {/* download */}
-      <div className='fixed left-0 top-full transform -translate-y-full md:p-10 p-6 '>
+      <div className='fixed left-0 top-full transform -translate-y-full md:p-10 p-6'>
         <button
           className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-4 rounded-full '
           onClick={handleDownload}
+          style={{ display: 'flex', alignItems: 'center' }}
         >
-          <HiOutlineDownload />
+          Download Brochure
+          <HiOutlineDownload className='ml-2' />
         </button>
       </div>
 
@@ -719,9 +724,7 @@ export default function Home() {
           <div className='md:w-1/2 md:pr-4'>
             <div
               className='relative cursor-pointer'
-              onClick={openImagePopup}
-              onMouseEnter={openImagePopup}
-              onMouseLeave={closeImagePopup}
+              onDoubleClick={openImagePopup}
             >
               <Image
                 src='/plan.png'
@@ -734,12 +737,18 @@ export default function Home() {
                 <div className='fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-90 z-50'>
                   <div className='max-w-full max-h-full'>
                     <Image
-                      src='/subha.png'
+                      src='/subha.jpg'
                       alt='Image'
                       className='w-full h-auto'
                       width={600}
                       height={600}
                     />
+                    <div
+                      className='absolute top-4 right-4 cursor-pointer text-white text-2xl'
+                      onClick={closeImagePopup}
+                    >
+                      Close
+                    </div>
                   </div>
                 </div>
               )}
