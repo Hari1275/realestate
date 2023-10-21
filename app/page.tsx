@@ -657,6 +657,7 @@ export default function Home() {
             </p>
           </motion.div>
         </div>
+
         {/* second content */}
         <div className='mx-auto py-10 px-10 md:px-20 mt-0 gap-10 flex flex-col md:flex-row items-center bg-[#1E1E1E] text-[#fff]'>
           {/* Left Column (Image) */}
