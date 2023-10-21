@@ -308,7 +308,7 @@ export default function Home() {
           </div>
 
           {/* Second Row: Logo */}
-          <Link href='#' className='btn btn-ghost normal-case text-xl px-10'>
+          <Link href='#' className='normal-case text-xl px-10'>
             <Image
               src='/logo.png'
               alt='logo'
