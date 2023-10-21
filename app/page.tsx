@@ -29,12 +29,14 @@ import 'swiper/css/pagination';
 
 import { HiOutlineDownload } from 'react-icons/hi';
 import { ImFacebook } from 'react-icons/im';
+import { HiCheck } from 'react-icons/hi';
 import {
   AiOutlineInstagram,
   AiOutlineTwitter,
   AiFillLinkedin,
 } from 'react-icons/ai';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
+import YouTubePlayer from './components/Video';
 
 // import './styles.css';
 export default function Home() {
@@ -92,18 +94,41 @@ export default function Home() {
   const openImagePopup = () => {
     setImagePopupOpen(true);
   };
+  const openPopup = () => {
+    setFormData({
+      firstName: '',
+      email: '',
+      phone: '',
+    });
+    setLoading(false);
+    setShowModal(true);
+  };
 
   const closeImagePopup = () => {
     setImagePopupOpen(false);
   };
+  const closePopup = () => {
+    setFormData({
+      firstName: '',
+      email: '',
+      phone: '',
+    });
+    setShowModal(false);
+    setLoading(false);
+
+    setDownload(false);
+  };
 
   const [showModal, setShowModal] = useState(false);
+  const [isDownload, setDownload] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     email: '',
     phone: '',
   });
   const [errors, setErrors] = useState({ phone: '' });
+  const [loading, setLoading] = useState(false);
+  const [succuss, setSuccuss] = useState(false);
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
@@ -117,8 +142,9 @@ export default function Home() {
     return phoneRegex.test(phone);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     const phone = formData.phone;
 
     if (!validatePhone(phone)) {
@@ -128,18 +154,72 @@ export default function Home() {
       return;
     }
 
+    const api = 'https://redefineerp-ext-api.azurewebsites.net/api/addLead?';
+
+    const parameters = {
+      code: 't9g1JMHRm4XrqYBDdNB2UNWhEr4Go2XA-M53XXWrwcY9AzFurIy6Hg==',
+      responderName: formData.firstName,
+      responderPhone: formData.phone,
+      responderEmail: formData.email,
+      projectName: '',
+      source: 'magicbricks',
+      comments: '',
+    };
+    // console.log('parameters: ', parameters);
+
+    try {
+      const response = await fetch(api, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ parameters }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSuccuss(true);
+        setTimeout(() => {
+          setSuccuss(false);
+        }, 3000);
+        console.log(data);
+        setFormData({
+          firstName: '',
+          email: '',
+          phone: '',
+        });
+        setLoading(false);
+        if (!isDownload) return;
+
+        const pdfUrl =
+          'https://d3svv1ub18oysf.cloudfront.net/Subha%20Esperanza_Brochure.pdf';
+        const a = document.createElement('a');
+        a.href = pdfUrl;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.download = 'ESPERANZA_BROCHURE.pdf';
+        a.click();
+      } else {
+        console.error('Error submitting the form');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
     // Form submission logic when validation passes.
     // console.log(formData);
   };
   function handleDownload() {
-    const pdfUrl =
-      'https://d3svv1ub18oysf.cloudfront.net/Subha%20Esperanza_Brochure.pdf';
-    const a = document.createElement('a');
-    a.href = pdfUrl;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.download = 'ESPERANZA_BROCHURE.pdf';
-    a.click();
+    setShowModal(true);
+    setDownload(true);
+    // const pdfUrl =
+    //   'https://d3svv1ub18oysf.cloudfront.net/Subha%20Esperanza_Brochure.pdf';
+    // const a = document.createElement('a');
+    // a.href = pdfUrl;
+    // a.target = '_blank';
+    // a.rel = 'noopener noreferrer';
+    // a.download = 'ESPERANZA_BROCHURE.pdf';
+    // a.click();
   }
   return (
     <>
@@ -317,7 +397,7 @@ export default function Home() {
               <button
                 className='bg-[#1E1E1E] text-white font-bold  rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1'
                 type='button'
-                onClick={() => setShowModal(true)}
+                onClick={openPopup}
               >
                 Enquire
               </button>
@@ -347,7 +427,7 @@ export default function Home() {
           <div
             className='swiper-image hero min-h-screen md:min-h-screen lg:min-h-screen bg-cover bg-no-repeat absolute top-0 w-full h-full'
             style={{
-              backgroundImage: 'url("/hero.webp")',
+              backgroundImage: 'url("/hero.png")',
 
               display: 'flex',
               alignItems: 'center', // Vertically center the content
@@ -375,7 +455,7 @@ export default function Home() {
           <div
             className='swiper-image hero min-h-screen md:min-h-screen lg:min-h-screen bg-cover bg-no-repeat'
             style={{
-              backgroundImage: 'url("/hero-1.webp")',
+              backgroundImage: 'url("/hero-1.jpg")',
 
               display: 'flex',
               alignItems: 'center', // Vertically center the content
@@ -428,7 +508,7 @@ export default function Home() {
         </SwiperSlide>
       </Swiper>
       {/* download */}
-      <div className='fixed left-0 top-full transform -translate-y-full md:p-10 p-6'>
+      <div className='fixed left-0 top-full transform -translate-y-full md:p-10 p-6 z-10'>
         <button
           className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-4 rounded-full '
           onClick={handleDownload}
@@ -445,15 +525,19 @@ export default function Home() {
             <div className='bg-white w-full rounded-lg shadow-lg relative flex flex-col outline-none focus:outline-none'>
               <div className='border-b border-solid border-gray-300 p-5 rounded-t flex items-center justify-between bg-[#095D8E] text-white'>
                 <h3 className='text-3xl font-semibold'>ENQUIRY FORM</h3>
-                <button
-                  className='text-white p-2'
-                  onClick={() => setShowModal(false)}
-                >
+                <button className='text-white p-2' onClick={closePopup}>
                   <span className='text-black opacity-70 text-xl block bg-[#DDCF8D] h-10 w-10 rounded-full flex items-center justify-center'>
                     x
                   </span>
                 </button>
               </div>
+              {succuss && (
+                <div className='alert ' style={{ borderRadius: '0' }}>
+                  <HiCheck />
+                  <span>Form submitted successfully!</span>
+                </div>
+              )}
+
               <div className='p-6'>
                 <form onSubmit={handleSubmit}>
                   <div className='form-control w-full '>
@@ -465,7 +549,7 @@ export default function Home() {
                       name='firstName'
                       className='input input-bordered w-full  mb-3'
                       type='text'
-                      placeholder='Type here'
+                      placeholder='Enter Your Name'
                       value={formData.firstName}
                       onChange={handleChange}
                     />
@@ -479,7 +563,7 @@ export default function Home() {
                       name='email'
                       className='input input-bordered w-full  mb-3'
                       type='text'
-                      placeholder='Type here'
+                      placeholder='Enter Your Email'
                       value={formData.email}
                       onChange={handleChange}
                     />
@@ -492,8 +576,8 @@ export default function Home() {
                       id='phone'
                       name='phone'
                       className='input input-bordered w-full  mb-3'
-                      type='text'
-                      placeholder='Type here'
+                      type='number'
+                      placeholder='Enter Your Phone'
                       value={formData.phone}
                       onChange={handleChange}
                     />
@@ -513,7 +597,7 @@ export default function Home() {
                       className='text-white bg-yellow-500 active:bg-[#DDCF8D] font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg focus:outline-none'
                       type='submit'
                     >
-                      Submit
+                      {loading ? 'Submitting...' : 'Submit'}
                     </button>
                   </div>
                 </form>
@@ -525,7 +609,7 @@ export default function Home() {
 
       <div>
         {/* content */}
-        <div className='mx-auto py-10 md:py-20 px-10 md:px-20 mt-0 gap-10 flex flex-col md:flex-row items-center bg-[#1E1E1E]'>
+        <div className='mx-auto py-10 md:py-20 px-10 md:px-20  mt-0 gap-10 flex flex-col md:flex-row items-center bg-[#1E1E1E]'>
           {/* Left Column (Image) */}
           {/* <div className='md:w-1/2 md:pr-4'>
           <img src='section.png' alt='Image' className='w-full h-auto' />
@@ -737,7 +821,7 @@ export default function Home() {
                 <div className='fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-90 z-50'>
                   <div className='max-w-full max-h-full'>
                     <Image
-                      src='/subha.jpg'
+                      src='/plan.png'
                       alt='Image'
                       className='w-full h-auto'
                       width={600}
@@ -809,7 +893,7 @@ export default function Home() {
           {/* Right Column (Text Content) */}
           <div className='md:w-1/2 mt-4 md:mt-0 text-[#fff]'>
             <Image
-              src='/location.png'
+              src='/location.webp'
               alt='Image'
               className='w-full h-[450px]'
               width={350}
@@ -818,63 +902,133 @@ export default function Home() {
           </div>
         </div>
         {/* maahome */}
+        <div className='mx-auto py-10 px-10 md:px-20 mt-0 gap-10 flex flex-col md:flex-row items-center bg-[#1E1E1E] text-[#fff]'>
+          {/* Left Column (Image) */}
+          <motion.div
+            ref={ref}
+            className='md:w-1/2 mt-4 md:mt-0'
+            initial='hidden'
+            animate={controls}
+            variants={{
+              hidden: { opacity: 0, x: -100 },
+              visible: { opacity: 1, x: 0 },
+            }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+          >
+            <h2 className='text-3xl font-700 text-[#DDCF8D]'>About MaaHomes</h2>
+            <p className='mt-4 '>
+              It is more than just papers & words. It is what the workflow and
+              ethics are built around. The motto is to provide an experience of
+              convenience to the client not only through the sales process but
+              throughout their cycle of ownership. Be it sale, maintenance or
+              resale.
+            </p>
+            <p className=' py-2'>
+              Maa Homes would always be there for you if you need help with your
+              property. Maa Homes takes pride in the quality and their projects
+              & if years down the line, you feel that you want to sell one of
+              your properties, you will have the option to sell back at a
+              standard price.
+            </p>
+          </motion.div>
 
-        <div className='mx-auto py-10 px-10 md:px-10 sm:px-4 md:py-20 py-10 pb-10 md:py-20 md:pb-20 bg-[#111111] text-[#fff]'>
-          <div className='lg:flex lg:flex-row-reverse lg:space-x-8'>
-            <div className='lg:w-1/2'>
-              <Image
-                src='/maahome.png'
-                alt='Image'
-                className='mx-auto'
-                width={250}
-                height={250}
-              />
-            </div>
-            <div className='lg:w-1/2 lg:pr-6'>
-              <p>
-                It is more than just papers & words. It is what the workflow and
-                ethics are built around. The motto is to provide an experience
-                of convenience to the client not only through the sales process
-                but throughout their cycle of ownership. Be it sale,
-                maintenance, or resale. Maa Homes would always be there for you
-                if you need help with your property. Maa Homes takes pride in
-                the quality of their projects, and if years down the line, you
-                feel that you want to sell one of your properties, you will have
-                the option to sell back at a standard price.
-              </p>
-            </div>
-          </div>
+          {/* Right Column (Text) */}
+          <motion.div
+            className='md:w-1/2 md:pr-4'
+            initial='hidden'
+            animate={controls}
+            variants={{
+              hidden: { opacity: 0, x: 100 },
+              visible: { opacity: 1, x: 0 },
+            }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+          >
+            <Image
+              src='/maahomes.jpg'
+              alt='Image'
+              className='w-full h-auto rounded-md'
+              width={350}
+              height={350}
+            />
+          </motion.div>
         </div>
+
         {/* about subha */}
-        <div className='lg:grid lg:grid-cols-2 lg:gap-4 mx-auto py-10 px-10  md:px-20 sm:px-4 md:py-20  md:py-20 md:pb-20 bg-[#111111] text-[#fff]'>
-          {/* Left Side (lg:col-span-1) */}
-          <div className='lg:col-span-1'>
-            <h2 className='text-3xl lg:text-4xl font-bold mb-4 lg:mb-0 text-center md:text-start'>
-              ABOUT SUBHA
-            </h2>
-          </div>
-          {/* Right Side (lg:col-span-1) */}
-          <div className='lg:col-span-1'>
-            <p className='mb-4'>
+        <div className='mx-auto py-10 md:py-20 px-10 md:px-20  mt-0 gap-10 flex flex-col md:flex-row items-center bg-[#1E1E1E]'>
+          {/* Left Column (Image) */}
+          {/* <div className='md:w-1/2 md:pr-4'>
+          <img src='section.png' alt='Image' className='w-full h-auto' />
+        </div> */}
+          <motion.div
+            className='md:w-1/2 md:pr-4'
+            initial={{ opacity: 0, x: -100 }} // Initial state, starts off-screen to the left
+            animate={{ opacity: 1, x: 0 }} // Animation properties when component appears
+            transition={{ duration: 1 }}
+          >
+            <Image
+              src='/subha-about.jpg'
+              alt='Image'
+              className='w-full h-auto'
+              width={350}
+              height={350}
+            />
+          </motion.div>
+          {/* Right Column (Text) */}
+          {/* <div className='md:w-1/2 mt-4 md:mt-0'>
+          <h2 className='text-3xl font-700 text-[#DDCF8D]'>
+            LIFE AT ESPERANZA
+          </h2>
+          <p className='mt-4 '>
+            Relationships mean the world to us; we connect people to their homes
+            and to their communities. All locations are hand-picked considering
+            future appreciation, proximity, and convenience of essentials in and
+            around the Project.
+          </p>
+        </div> */}
+          <motion.div
+            className='md:w-1/2 mt-4 md:mt-0'
+            initial={{ opacity: 0, x: 100 }} // Initial state, starts off-screen to the right
+            animate={{ opacity: 1, x: 0 }} // Animation properties when component appears
+            transition={{ duration: 1 }} // Animation duration
+          >
+            <h2 className='text-3xl font-700 text-[#DDCF8D]'>About Shuba</h2>
+            <p className='mt-4 text-[#fff]'>
+              Our primary focus is on developing high quality constructions and
+              attaining leadership positioning in the real-estate field and
+              becoming one of the most preferred brands. We promise our
+              customers that with a diverse multi-domain portfolio, we will
+              bring truly global living standards right into your home. Natural
+              evolution and diversifications led to the formation of Subha by
+              blending the traditional essence of business development.
+            </p>
+            <p className=' py-2 text-[#fff]'>
               Built on innovation, leadership and trust, Subha is one of the
               leading developers in South India with the philosophy of
               Infrastructure development and property manage event with the best
-              technologies in place .We came with a zeal to achieve perfection
+              technologies in place . We came with a zeal to achieve perfection
               by seeing the rising need for quality amongst people .We conquered
               the hearts of millions by constructing the customized villas,
               apartments, commercial and retail spaces of the highest quality
-              standards in order
+              standards in order.
             </p>
-            <p>
-              Built on innovation, leadership and trust, Subha is one of the
-              leading developers in South India with the philosophy of
-              Infrastructure development and property manage event with the best
-              technologies in place .We came with a zeal to achieve perfection
-              by seeing the rising need for quality amongst people .We conquered
-              the hearts of millions by constructing the customized villas,
-              apartments, commercial and retail spaces of the highest quality
-              standards in order
-            </p>
+          </motion.div>
+        </div>
+
+        {/* <div className='flex items-center justify-center bg-black mx-auto py-10 px-10 md:px-10 sm:px-4 md:py-20 py-10 pb-10 md:py-20 md:pb-20 '>
+          
+        </div> */}
+        <div>
+          <div className='video-responsive bg-black '>
+            <iframe
+              width='560'
+              height='315'
+              className=' px-10 py-10 md:px-20 md:pt-20 md:py-20 mx-auto'
+              src='https://www.youtube.com/embed/X6X9gdSTNhk?si=rLFhdLpIDK73QkVz'
+              title='YouTube video player'
+              frameBorder='0'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
 
@@ -971,17 +1125,27 @@ export default function Home() {
               </div>
               <div>
                 <div className='bg-[#A08131] rounded-lg '>
+                  {succuss && (
+                    <div className='alert ' style={{ borderRadius: '0' }}>
+                      <HiCheck />
+                      <span>Form submitted successfully!</span>
+                    </div>
+                  )}
                   <div className='bg-[#A08131] rounded-lg p-4 flex flex-col items-center text-center'>
                     <h1 className='text-xl font-bold mb-4 text-[#fff]'>
                       Feel free to contact us if you need any assistance, any
                       help, or another question.
                     </h1>
-                    <form className='w-full'>
+                    <form className='w-full' onSubmit={handleSubmit}>
                       <div className='mb-4'>
                         <input
                           type='text'
+                          id='firstName'
+                          name='firstName'
                           className='bg-gray-200 p-2 w-full rounded'
                           placeholder='Name'
+                          value={formData.firstName}
+                          onChange={handleChange}
                           style={{
                             backgroundColor: '#F0F4F5',
                             color: '#AEB4B9',
@@ -991,24 +1155,35 @@ export default function Home() {
                       <div className='mb-4'>
                         <input
                           type='email'
+                          id='email'
+                          name='email'
                           className='bg-gray-200 p-2 w-full rounded'
                           placeholder='Email'
                           style={{
                             backgroundColor: '#F0F4F5',
                             color: '#AEB4B9',
                           }}
+                          value={formData.email}
+                          onChange={handleChange}
                         />
                       </div>
                       <div className='mb-4'>
                         <input
-                          type='tel'
+                          type='number'
+                          id='phone'
+                          name='phone'
                           className='bg-gray-200 p-2 w-full rounded'
                           placeholder='Phone'
                           style={{
                             backgroundColor: '#F0F4F5',
                             color: '#AEB4B9',
                           }}
+                          value={formData.phone}
+                          onChange={handleChange}
                         />
+                        {errors.phone && (
+                          <span className='text-red-500'>{errors.phone}</span>
+                        )}
                       </div>
                       {/* <div className='mb-4'>
                       <input
@@ -1022,7 +1197,7 @@ export default function Home() {
                         className='bg-black text-white px-4 py-2 rounded'
                         style={{ backgroundColor: '#111' }}
                       >
-                        Enquire
+                        {loading ? 'Submitting...' : 'Enquire'}
                       </button>
                     </form>
                   </div>
